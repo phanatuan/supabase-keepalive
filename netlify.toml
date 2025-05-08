@@ -1,6 +1,6 @@
 [functions]
+  directory = "functions"
   node_bundler = "esbuild"
-  included_files = ["./functions/**"]
 
 [functions."keep-supabase-alive"]
-  schedule = "0 9 * * 1,4"  # At 09:00 UTC every Monday and Thursday
+  schedule = "0 9 * * 1,4"
