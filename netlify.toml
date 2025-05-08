@@ -1,0 +1,6 @@
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["./functions/**"]
+
+[functions."keep-supabase-alive"]
+  schedule = "*/15 * * * *" # every 15 minutes
