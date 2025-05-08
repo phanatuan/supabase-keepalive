@@ -1,8 +1,18 @@
 import fetch from "node-fetch";
 
 export async function handler() {
+  console.log("Ping function started");
+
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_API_KEY = process.env.SUPABASE_API_KEY;
+
+  if (!SUPABASE_URL || !SUPABASE_API_KEY) {
+    console.error("Missing environment variables");
+    return {
+      statusCode: 500,
+      body: "Missing SUPABASE_URL or SUPABASE_API_KEY",
+    };
+  }
 
   try {
     const res = await fetch(
@@ -16,17 +26,20 @@ export async function handler() {
     );
 
     if (!res.ok) {
-      throw new Error(`Failed to ping Supabase: ${res.statusText}`);
+      throw new Error(`Supabase error: ${res.status} ${res.statusText}`);
     }
+
+    console.log("Supabase ping successful");
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Supabase keepalive ping successful" }),
+      body: JSON.stringify({ message: "Ping successful" }),
     };
   } catch (error) {
+    console.error("Function error:", error.message);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: "Function error: " + error.message,
     };
   }
 }
